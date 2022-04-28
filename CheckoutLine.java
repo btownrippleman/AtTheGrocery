@@ -9,44 +9,15 @@ public class CheckoutLine {
    public void enqueue(cNode cn) {
       cNode prev = head;
       cNode temp;
+      if (head == null) head = cn;
 
-      if (head == null)
-         head = cn;
-      else if (head.getNext() == null) {
-         if (cn.getCustomer().getNumberOfItems() <= 15 && head.getCustomer().getNumberOfItems()>15) {
-            cn.setNext(prev);
-            head = cn;
-         } else {
-            head.setNext(cn);
-         }
-      }
-      // else if (cn.getCustomer().getNumberOfItems() < 15 &&
-      // head.getCustomer().getNumberOfItems() >15 &&
-      // head.getNext().getCustomer().getNumberOfItems() >15)
-      // {cn.setNext(head.getNext());head.setNext(cn);}
-      else if (cn.getCustomer().getNumberOfItems() <= 15) {
-         boolean addToEnd = true;
-         temp = prev;
-         while (temp.getNext() != null) {
-            if (temp.getCustomer().getNumberOfItems() > 15 && temp.getNext().getCustomer().getNumberOfItems() > 15) {
-               cn.setNext(temp.getNext());
-               temp.setNext(cn);
-               addToEnd = false;
-               break;
-            }
-            System.out.println("not broken");
-            temp = temp.getNext();
-         }
-         if (addToEnd)
-            temp.setNext(cn);
-         head = prev;
-      }
+      else if (head.getNext() == null) head.setNext(cn);
 
       else {
          boolean addToEnd = true;
          temp = prev;
          while (temp.getNext() != null) {
-            if (temp.getCustomer().getNumberOfItems() <= 15 && temp.getNext().getCustomer().getNumberOfItems() <= 15) {
+            if (temp.inFastLane!=cn.inFastLane && temp.getNext().inFastLane!=cn.inFastLane) {
                cn.setNext(temp.getNext());
                temp.setNext(cn);
                addToEnd = false;

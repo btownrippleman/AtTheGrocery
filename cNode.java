@@ -2,7 +2,8 @@ public class cNode
 {
    public cNode next;
    public Customer customer;
-   
+   public boolean inFastLane;
+
    //Default constructor 
    public cNode()
       {  
@@ -14,6 +15,8 @@ public class cNode
    public cNode(Customer c)
       {
          customer=c;
+         if (c.getNumberOfItems() > 15) inFastLane = false;
+         else inFastLane = true;
       }
       
    //method to set a Customer object to be associated with the cNode  
